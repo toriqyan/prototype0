@@ -1,0 +1,7 @@
+download speech sdk 11
+https://www.microsoft.com/en-us/download/confirmation.aspx?id=27226&6B49FDFB-8E5B-4B07-BC31-15695C5A2143=1
+
+install MicrosoftSpeechPlatformSDK.msi 
+need to add assembly reference   C:\Program Files (x86)\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll
+
+build program.cs

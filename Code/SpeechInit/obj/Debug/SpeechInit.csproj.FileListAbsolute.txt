@@ -1,0 +1,10 @@
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\SpeechInit\SpeechInit\bin\Debug\SpeechInit.exe.config
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\SpeechInit\SpeechInit\bin\Debug\SpeechInit.exe
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\SpeechInit\SpeechInit\bin\Debug\SpeechInit.pdb
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\SpeechInit\SpeechInit\obj\Debug\SpeechInit.csprojResolveAssemblyReference.cache
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\SpeechInit\SpeechInit\obj\Debug\SpeechInit.exe
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\SpeechInit\SpeechInit\obj\Debug\SpeechInit.pdb
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\SpeechInit\SpeechInit\bin\Debug\Microsoft.Speech.dll
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\bin\Debug\SpeechInit.exe.config
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\obj\Debug\SpeechInit.exe
+C:\Users\soth02\Documents\hangelhack\Code\SpeechInit\obj\Debug\SpeechInit.pdb
