@@ -2,16 +2,23 @@
 using System.Speech.Recognition; // Microsoft.Speech.dll at C:\Program Files (x86)\Microsoft SDKs\Speech\v11.0\Assembly
 using System.Speech.Synthesis;
 using System.Globalization; // recognition
+using System.Runtime.InteropServices;
+using System.IO;
 
 namespace ConsoleSpeech
 {
+
     class ConsoleSpeechProgram
     {
         static SpeechSynthesizer ss = new SpeechSynthesizer();
         static SpeechRecognitionEngine sre;
         static bool done = false;
         static bool speechOn = true;
+        //static WaveIn s_WaveIn;
 
+        [DllImport("winmm.dll", EntryPoint = "mciSendStringA", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
+        private static extern int mciSendString(string lpstrCommand, string lpstrReturnString, int uReturnLength, int hwndCallback);
+        
         static void Main(string[] args)
         {
             try
@@ -26,42 +33,15 @@ namespace ConsoleSpeech
                 sre.SpeechRecognized += sre_SpeechRecognized;
 
                 Choices ch_StartStopCommands = new Choices();
-                ch_StartStopCommands.Add("speech on");
+                ch_StartStopCommands.Add("Alexa record");
                 ch_StartStopCommands.Add("speech off");
                 ch_StartStopCommands.Add("klatu barada nikto");
                 GrammarBuilder gb_StartStop = new GrammarBuilder();
                 gb_StartStop.Append(ch_StartStopCommands);
                 Grammar g_StartStop = new Grammar(gb_StartStop);
-
-                //string[] numbers = new string[] { "1", "2", "3", "4" };
-                //Choices ch_Numbers = new Choices(numbers);
-
-                //string[] numbers = new string[100];
-                //for (int i = 0; i < 100; ++i)
-                //  numbers[i] = i.ToString();
-                //Choices ch_Numbers = new Choices(numbers);
-
-                Choices ch_Numbers = new Choices();
-                ch_Numbers.Add("1");
-                ch_Numbers.Add("2");
-                ch_Numbers.Add("3");
-                ch_Numbers.Add("4"); // technically Add(new string[] { "4" });
-
-                //for (int num = 1; num <= 4; ++num)
-                //{
-                //  ch_Numbers.Add(num.ToString());
-                //}
-
-                GrammarBuilder gb_WhatIsXplusY = new GrammarBuilder();
-                gb_WhatIsXplusY.Append("What is");
-                gb_WhatIsXplusY.Append(ch_Numbers);
-                gb_WhatIsXplusY.Append("plus");
-                gb_WhatIsXplusY.Append(ch_Numbers);
-                Grammar g_WhatIsXplusY = new Grammar(gb_WhatIsXplusY);
-
+           
+             
                 sre.LoadGrammarAsync(g_StartStop);
-                sre.LoadGrammarAsync(g_WhatIsXplusY);
-
                 sre.RecognizeAsync(RecognizeMode.Multiple); // multiple grammars
 
                 while (done == false) { ; }
@@ -85,37 +65,34 @@ namespace ConsoleSpeech
 
             if (confidence < 0.60) return;
 
-            if (txt.IndexOf("speech on") >= 0)
+            if (txt.IndexOf("Alexa record") >= 0)
             {
+                ss.Speak("start now");
                 Console.WriteLine("Speech is now ON");
                 speechOn = true;
+
+                mciSendString("open new Type waveaudio Alias recsound", "", 0, 0);
+                mciSendString("record recsound", "", 0, 0);
+
+                System.Threading.Thread.Sleep(5000);
+
+                mciSendString("save recsound C:\\Users\\Chris\\hangelhack\\hangelhack\\Code\\test.wav", "", 0, 0);
+                mciSendString("close recsound ", "", 0, 0);
+                                
             }
 
             if (txt.IndexOf("speech off") >= 0)
             {
+                ss.Speak("Speech is now OFF");
                 Console.WriteLine("Speech is now OFF");
                 speechOn = false;
+
+                File.Delete(@"C:\\Users\\Chris\\hangelhack\\hangelhack\\Code\\test.wav");
+               
             }
 
             if (speechOn == false) return;
 
-            if (txt.IndexOf("klatu") >= 0 && txt.IndexOf("barada") >= 0)
-            {
-                ((SpeechRecognitionEngine)sender).RecognizeAsyncCancel();
-                done = true;
-                Console.WriteLine("(Speaking: Farewell)");
-                ss.Speak("Farewell");
-            }
-
-            if (txt.IndexOf("What") >= 0 && txt.IndexOf("plus") >= 0) // what is 2 plus 3
-            {
-                string[] words = txt.Split(' ');     // or use e.Result.Words
-                int num1 = int.Parse(words[2]);
-                int num2 = int.Parse(words[4]);
-                int sum = num1 + num2;
-                Console.WriteLine("(Speaking: " + words[2] + " plus " + words[4] + " equals " + sum + ")");
-                ss.SpeakAsync(words[2] + " plus " + words[4] + " equals " + sum);
-            }
         } // sre_SpeechRecognized
 
     } // Program

@@ -21,7 +21,7 @@ var apikey='dc8c38c1-730d-4c5e-ac0d-8c9c82932bf4'
 
 //var url  = 'http://posttestserver.com/post.php?dir=needle';
 var url  = apiurl;
-var soundfile = 'test.mp3'
+var soundfile = 'test.wav'
 
 var data = {
   apikey: apikey,
