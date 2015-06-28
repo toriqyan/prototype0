@@ -1,3 +1,5 @@
+example is from https://msdn.microsoft.com/en-us/magazine/dn857362.aspx.  There are some differences - you want to add the System.Speech assembly as well (see below for location)
+
 download speech sdk 11
 https://www.microsoft.com/en-us/download/confirmation.aspx?id=27226&6B49FDFB-8E5B-4B07-BC31-15695C5A2143=1
 
